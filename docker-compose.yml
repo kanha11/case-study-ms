@@ -1,0 +1,24 @@
+version: "2.1"
+services:
+  mongo:
+    image: mongo:3.2.4
+    ports:
+    - 27017:27017
+    command: --smallfiles
+        
+  post:
+    image: employee-post-service:latest
+    ports:
+    - 8010:8010
+    links:
+    - mongo
+    entrypoint: "java -jar /post-service-1.0.0.jar"
+
+  fetch:
+    image: employee-fetch-service:latest
+    ports:
+    - 8020:8020
+    links:
+    - mongo
+    entrypoint: "java -jar /fetch-service-1.0.0.jar"
+entrypoint: "java -jar /fetch-service-1.0.0.jar"
